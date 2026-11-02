@@ -8,7 +8,7 @@ GB Miner is the successor of [GB Parano1d Miner](https://github.com/gustlborg/gb
 
 **Current release: v1.0.0**
 
-- **One miner for NOID and TAPE.** Choose the coin with `COIN` in `start.sh` / `start.bat`, with `--coin`, or with `COIN=` in the HiveOS custom config. Otherwise the wallet address decides.
+- **One miner for NOID and TAPE.** Each package has one start script per coin with the coin already set (`start-noid.sh` / `start-tape.sh`, on Windows `start-noid.bat` / `start-tape.bat`): fill in both once and switch by starting the other one. On the command line it is `--coin`, on HiveOS `COIN=` in the custom config; otherwise the wallet address decides.
 - **Pools for both coins by name:**
   - NOID: the GB Pool and every pool name from 3.0.6.
   - TAPE: the GB Pool (`stratum.tape.pool.army`), suprnova, rplant and pqpool.
@@ -34,18 +34,17 @@ You do not need the CUDA Toolkit, only an NVIDIA driver, version 580 or newer. T
 
 ## Quick start
 
-**Linux and Windows:** Open the start script in a text editor (`start.sh`; on Windows right-click `start.bat` → Edit), fill in the block at the top, save, and start it:
+**Linux and Windows:** Each package holds one start script per coin, with the coin already set: `start-noid.sh` and `start-tape.sh` (Linux), `start-noid.bat` and `start-tape.bat` (Windows). Open the one for your coin in a text editor (on Windows right-click → Edit), fill in the block at the top, save, and start it. Fill in both once, and you switch coins by starting the other one:
 
 | Field | What to put in |
 |---|---|
-| `COIN` | `noid` (preset) or `tape`; it has to match the wallet |
-| `WALLET` | your payout address, `o1…` for NOID, `tape1…` for TAPE (required) |
+| `WALLET` | your payout address, `o1…` in `start-noid.*`, `tape1…` in `start-tape.*` (required) |
 | `WORKER` | the name shown on the pool (optional; blank = the computer's name) |
 | `POOL` | `gbpool` (default, the GB Pool of the coin), another pool name of the coin (see [Pools](#pools)), or a pool address such as `stratum+tcp://tape.suprnova.cc:3352` (Suprnova's TAPE port for multi-GPU rigs) |
 | `MODE` | optional: `balanced` (default), `performance` (highest hashrate) or `efficiency` (fewest watts per hash) |
 | `LOCK_CORE_CLOCK`, `LOCK_MEM_CLOCK`, `CORE_OFFSET`, `POWER_LIMIT` | optional clock and power settings, e.g. `2705`, `810`, `300` on an RTX 5070 Ti; leave them blank to leave the card alone. They are applied at start and put back when the miner exits |
 
-In `start.bat` each line reads `set "FIELD=value"`, for example `set "COIN=tape"`. Start it with `sh start.sh` on Linux (with clock or power settings as root: `sudo sh start.sh`). On Windows, double-click `start.bat` (with clock or power settings: right-click → Run as administrator).
+In the `.bat` files each line reads `set "FIELD=value"`, for example `set "WALLET=tape1…"`. Start it with `sh start-tape.sh` (or `sh start-noid.sh`) on Linux (with clock or power settings as root: `sudo sh start-tape.sh`). On Windows, double-click `start-tape.bat` or `start-noid.bat` (with clock or power settings: right-click → Run as administrator).
 
 **Linux:** Or pass the full command line:
 ```
