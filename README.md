@@ -1,5 +1,10 @@
 # GB Miner
 
+<p>
+  <img src="images/dashboard-noid.png" alt="GB Miner dashboard mining NOID" width="49%">
+  <img src="images/dashboard-tape.png" alt="GB Miner dashboard mining TAPE" width="49%">
+</p>
+
 **GB Miner** is a GPU miner for two coins that share the same proof of work (Poseidon2b): **Parano1d (NOID)** and **Retro Boomer (TAPE)**. It runs on NVIDIA GTX 16 and RTX 20/30/40/50-series cards, Volta (V100, Titan V, Quadro GV100), Hopper (H100) and GA100 (CMP 170HX, A100, A30), on Linux, Windows and HiveOS, with one download per platform. It speaks Stratum and HTTP pools natively.
 
 You pick the coin with one setting, `COIN=noid` or `COIN=tape` (`--coin`). Without it the miner goes by your wallet address: `o1…` is NOID, `tape1…` is TAPE. The dashboard shows which coin you are mining: **GB Miner · NOID** in green, **GB Miner · TAPE** in orange.
@@ -10,7 +15,7 @@ GB Miner is the successor of [GB Parano1d Miner](https://github.com/gustlborg/gb
 
 - **One miner for NOID and TAPE.** Each package has one start script per coin with the coin already set (`start-noid.sh` / `start-tape.sh`, on Windows `start-noid.bat` / `start-tape.bat`): fill in both once and switch by starting the other one. On the command line it is `--coin`, on HiveOS `COIN=` in the custom config; otherwise the wallet address decides.
 - **Pools for both coins by name:**
-  - NOID: the GB Pool and every pool name from 3.0.6.
+  - NOID: the GB Pool and the pool names from 3.0.6, without `ariabrain` (AriaPool paused NOID mining on 18 October 2026).
   - TAPE: the GB Pool (`stratum.tape.pool.army`), suprnova, rplant and pqpool.
 - **No pool fee on the GB Pool with this miner (0 %),** on all four ports and for both coins.
 - **HiveOS:** The miner is now called `gb-miner`. The Pool URL field also takes `host:port`, a bare host name or a pool name.
@@ -83,7 +88,7 @@ The other pools:
 
 | Coin | Names |
 |---|---|
-| NOID | `innovlab`, `luckypool` / `luckypool-us` / `luckypool-asia`, `suprnova`, `alphapool`, `rplant` / `rplant-na` / `rplant-asia` (TLS), `parano1d`, `ariabrain` (HTTP); `noidexplorer` is another name for `gbpool` |
+| NOID | `innovlab`, `luckypool` / `luckypool-us` / `luckypool-asia`, `suprnova`, `alphapool`, `rplant` / `rplant-na` / `rplant-asia` (TLS), `parano1d` (HTTP); `noidexplorer` is another name for `gbpool` |
 | TAPE | `suprnova` (`tape.suprnova.cc:3351`), `suprnova-ssl` (`:3357`), `suprnova-solo` (`:3358`), `rplant` / `rplant-na` / `rplant-asia` (TLS, port 17066), `pqpool` (`tape.pqpool.com:5555`), `pqpool-ssl` (`:5556`; for solo on PQPool write the wallet as `solo:tape1…`) |
 
 For TAPE you can also paste a pool's web address (`https://tape.pool.army`, `https://tape.suprnova.cc`, `https://pool.rplant.xyz`, `https://pqpool.com`); the miner uses that pool's main Stratum port. A second pool can be given with `--backup-pool`. The miner switches over on its own if the main pool stops answering, and switches back when it returns.
