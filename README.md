@@ -25,7 +25,7 @@ GB Miner is the successor of [GB Parano1d Miner](https://github.com/gustlborg/gb
 
 ## Download
 
-Get the archive for your platform from [Releases](../../releases), unpack it, and run it from inside the folder.
+Get the archive for your platform from [Releases](../../releases/latest), unpack it, and run it from inside the folder.
 
 | Platform | Archive |
 |---|---|
@@ -103,29 +103,6 @@ Supported cards:
 - **Driver for Volta:** Volta cards need the 580 driver series.
 
 One binary covers all of these generations, so a mixed rig needs no separate download.
-
-## Measured hashrate
-
-NOID and TAPE use the same proof of work and GB Miner uses the kernels of GB Parano1d Miner 3.0.6 unchanged, so these figures apply to both coins. They were measured with GB Parano1d Miner 3.0.5 and 3.0.6 while mining NOID. The first table: 3.0.5, live at the InnovLab pool on 28 October 2026, two 1-minute runs per mode (mean shown), with core clock, memory clock and core-clock offset set through the NVIDIA driver; with the miner's own settings (`LOCK_CORE_CLOCK`, `LOCK_MEM_CLOCK`, `CORE_OFFSET`) the power can differ by several percent. Displayed hashrate, board power from nvidia-smi; kH/W = kilohashes per second per watt. Every card tolerates a different offset; see "Same hashrate, less power" in the package README.
-
-| GPU | Mode | Core clock / memory clock / offset | MH/s | Power | kH/W |
-|---|---|---|---|---|---|
-| RTX 3060 (Windows) | performance | 1750 MHz / 810 MHz / +200 MHz | 30.83 | 102.1 W | 302.0 |
-| RTX 3060 (Windows) | balanced | 1750 MHz / 810 MHz / +200 MHz | 29.55 | 90.7 W | 325.8 |
-| RTX 4060 Ti (Linux) | performance | 2450 MHz / 810 MHz / +250 MHz | 53.10 | 106.4 W | 499.1 |
-| RTX 4060 Ti (Linux) | balanced | 2450 MHz / 810 MHz / +250 MHz | 52.66 | 103.3 W | 509.8 |
-| RTX 5070 Ti (Linux) | performance | 2705 MHz / 810 MHz / +300 MHz | 117.72 | 206.3 W | 570.7 |
-| RTX 5070 Ti (Linux) | balanced | 2705 MHz / 810 MHz / +300 MHz | 116.77 | 199.5 W | 585.2 |
-
-On rented servers, at the host's settings (hashrate only): CMP 170HX, A100 and H100 NVL with 3.0.5 at the InnovLab pool on 28 October 2026 (mean of two 2-minute runs), RTX 2080 and Tesla V100 with 3.0.6 at the GB Pool.
-
-| GPU | Power limit | MH/s |
-|---|---|---|
-| RTX 2080 | 150 W (set by the host) | 17.9 |
-| Tesla V100 SXM2 | 300 W | 26.5 |
-| CMP 170HX | 200 W (set by the host) | 280.3 |
-| A100 SXM4 40GB | 400 W | 388.7 |
-| H100 NVL | 400 W (set by the host) | 578.3 |
 
 ## Mining modes, autotune, power and clocks
 
