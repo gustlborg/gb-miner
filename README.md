@@ -19,7 +19,7 @@ GB Miner is the successor of [GB Parano1d Miner](https://github.com/gustlborg/gb
 - **HiveOS on a rig with an integrated GPU:** the panel showed one card's hashrate on the integrated GPU (for example an Intel HD Graphics) and left the last card empty, because the HiveOS script reported shifted bus numbers. It now reports each card's own bus number; mining itself and the total hashrate were never affected.
 - RTX 30/40/50, GA100 and Hopper cards run the same kernels as before.
 
-The complete lists of the new and the faster GPUs and the NVIDIA driver per GPU family are in the [release notes](../../releases/tag/v1.0.1).
+The complete lists of the new and the faster GPUs and the NVIDIA driver per GPU family are in the [release notes](../../releases/latest).
 
 Since 1.0.0:
 
@@ -34,7 +34,7 @@ Since 1.0.0:
 
 ## Download
 
-Get the archive for your platform from [Releases](../../releases/tag/v1.0.1), unpack it, and run it from inside the folder.
+Get the archive for your platform from [Releases](../../releases/latest), unpack it, and run it from inside the folder.
 
 | Platform | Archive |
 |---|---|
