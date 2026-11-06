@@ -11,7 +11,11 @@ You pick the coin with one setting, `COIN=noid` or `COIN=tape` (`--coin`). Witho
 
 GB Miner is the successor of [GB Parano1d Miner](https://github.com/gustlborg/gb-parano1d-miner) 3.0.6. Since 1.0.1 it also runs GTX 900 and GTX 10 cards and is faster on GTX 16, RTX 20 and Volta cards; every other card runs the kernels of 3.0.6 unchanged. Everything applies to both coins.
 
-**Current release: v1.0.1**
+**Current release: v1.0.2**
+
+- **New address for the NOID GB Pool:** web page https://noid.pool.army, Stratum `stratum+tcp://stratum.noid.pool.army:3333` (ports 3333–3336 as before). `gbpool` and the other GB Pool names use it now. Older versions still reach the pool through the old address for now, but that address will be retired, so please update. If you entered the pool address yourself (HiveOS Pool URL field, `POOL` in a start script, `--pool`), change the host to `stratum.noid.pool.army` and keep your port, or use `gbpool`. TAPE is not affected.
+
+Since 1.0.1:
 
 - **New: GTX 900 (Maxwell) and GTX 10-series (Pascal) cards are supported**, together with the Tesla M40/M60, Tesla P100/P40/P4 and the P102/P104/P106-100 mining cards.
 - **GTX 16 / RTX 20-series (Turing) and Volta cards are faster: +0.6 to +4.6 %** (measured live on rented cards: RTX 2080 Ti +4.6 %, CMP 40HX +4.2 %, CMP 50HX +4.2 %, RTX 2060 +4.0 %, RTX 2060 SUPER +3.0 %, RTX 2080 SUPER +1.2 %, GTX 1660 Ti +0.9 %, Tesla V100 +0.6 %).
@@ -19,7 +23,7 @@ GB Miner is the successor of [GB Parano1d Miner](https://github.com/gustlborg/gb
 - **HiveOS on a rig with an integrated GPU:** the panel showed one card's hashrate on the integrated GPU (for example an Intel HD Graphics) and left the last card empty, because the HiveOS script reported shifted bus numbers. It now reports each card's own bus number; mining itself and the total hashrate were never affected.
 - RTX 30/40/50, GA100 and Hopper cards run the same kernels as before.
 
-The complete lists of the new and the faster GPUs and the NVIDIA driver per GPU family are in the [release notes](../../releases/latest).
+The complete lists of the new and the faster GPUs and the NVIDIA driver per GPU family are in the [release notes](../../releases/tag/v1.0.2).
 
 Since 1.0.0:
 
@@ -34,13 +38,13 @@ Since 1.0.0:
 
 ## Download
 
-Get the archive for your platform from [Releases](../../releases/latest), unpack it, and run it from inside the folder.
+Get the archive for your platform from [Releases](../../releases/tag/v1.0.2), unpack it, and run it from inside the folder.
 
 | Platform | Archive |
 |---|---|
-| Linux | `gb-miner-1.0.1-linux.tar.gz` |
-| Windows | `gb-miner-1.0.1-windows.zip` |
-| HiveOS | `gb-miner-1.0.1.tar.gz` (custom-miner package) |
+| Linux | `gb-miner-1.0.2-linux.tar.gz` |
+| Windows | `gb-miner-1.0.2-windows.zip` |
+| HiveOS | `gb-miner-1.0.2.tar.gz` (custom-miner package) |
 
 The Linux and Windows archives each contain a `SHA256SUMS` file with the SHA-256 of every file inside. The `SHA256SUMS` on the release page lists all three archives.
 
@@ -73,7 +77,7 @@ In the `.bat` files each line reads `set "FIELD=value"`, for example `set "WALLE
 
 **HiveOS:** Flight Sheet → Custom miner:
 - Miner name: `gb-miner`
-- Installation URL: `https://github.com/gustlborg/gb-miner/releases/download/v1.0.1/gb-miner-1.0.1.tar.gz`
+- Installation URL: `https://github.com/gustlborg/gb-miner/releases/download/v1.0.2/gb-miner-1.0.2.tar.gz`
 - Wallet and worker template: `%WAL%.%WORKER_NAME%` (or your address)
 - Pool URL: a pool address, `host:port` (taken as plain Stratum; for a TLS port write `stratum+tls://host:port`), or a pool name such as `gbpool`. Empty means the GB Pool of the coin.
 - Extra config arguments: `COIN=tape` or `COIN=noid` (without it the wallet decides). Everything else is optional, for example `MODE=performance` or `LOCK_CORE_CLOCK=`, `LOCK_MEM_CLOCK=`, `CORE_OFFSET=` (see the README inside the package).
@@ -84,7 +88,7 @@ HiveOS derives the miner name from the archive's file name, so use exactly this 
 
 `--pool` (`POOL` in the start scripts) takes a pool name of the coin you mine or a pool address. It detects Stratum or HTTP from the address. The default is the GB Pool of the coin. Each GB Pool has four ports, and all of them adjust the difficulty to your hashrate on their own:
 
-| `--pool` | NOID (`stratum.noidexplorer.org`) | TAPE (`stratum.tape.pool.army`) | For |
+| `--pool` | NOID (`stratum.noid.pool.army`) | TAPE (`stratum.tape.pool.army`) | For |
 |---|---|---|---|
 | `gbpool` (default) | `:3333` | `:3333` | Recommended for everyone, CPU and GPU. |
 | `gbpool-ssl` | `:3334` (TLS) | `:3334` (TLS) | The same, encrypted. |
@@ -97,7 +101,7 @@ The other pools:
 
 | Coin | Names |
 |---|---|
-| NOID | `innovlab`, `luckypool` / `luckypool-us` / `luckypool-asia`, `suprnova`, `alphapool`, `rplant` / `rplant-na` / `rplant-asia` (TLS), `parano1d` (HTTP); `noidexplorer` is another name for `gbpool` |
+| NOID | `innovlab`, `luckypool` / `luckypool-us` / `luckypool-asia`, `suprnova`, `alphapool`, `rplant` / `rplant-na` / `rplant-asia` (TLS), `parano1d` (HTTP) |
 | TAPE | `suprnova` (`tape.suprnova.cc:3351`), `suprnova-ssl` (`:3357`), `suprnova-solo` (`:3358`), `rplant` / `rplant-na` / `rplant-asia` (TLS, port 17066), `pqpool` (`tape.pqpool.com:5555`), `pqpool-ssl` (`:5556`; for solo on PQPool write the wallet as `solo:tape1…`) |
 
 For TAPE you can also paste a pool's web address (`https://tape.pool.army`, `https://tape.suprnova.cc`, `https://pool.rplant.xyz`, `https://pqpool.com`); the miner uses that pool's main Stratum port. A second pool can be given with `--backup-pool`. The miner switches over on its own if the main pool stops answering, and switches back when it returns.
