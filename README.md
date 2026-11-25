@@ -5,13 +5,19 @@
   <img src="images/dashboard-tape.png" alt="GB Miner dashboard mining TAPE" width="49%">
 </p>
 
-**GB Miner** is a GPU miner for two coins that share the same proof of work (Poseidon2b): **Parano1d (NOID)** and **Retro Boomer (TAPE)**. It runs on NVIDIA GTX 900/10/16 and RTX 20/30/40/50-series cards, Tesla M40, P100 and P40, Volta (V100, Titan V, Quadro GV100), Hopper (H100) and GA100 (CMP 170HX, A100, A30), on Linux, Windows and HiveOS, with one download per platform. It speaks Stratum and HTTP pools natively.
+**GB Miner** is a GPU miner for three coins: **Parano1d (NOID)** and **Retro Boomer (TAPE)**, which share the same proof of work (Poseidon2b), and **Neural Engine Byte (NEB)**, mined by an engine of its own (see [NEB](#neb)). For NOID and TAPE it runs on NVIDIA GTX 900/10/16 and RTX 20/30/40/50-series cards, Tesla M40, P100 and P40, Volta (V100, Titan V, Quadro GV100), Hopper (H100) and GA100 (CMP 170HX, A100, A30), on Linux, Windows and HiveOS, with one download per platform. It speaks Stratum and HTTP pools natively.
 
-You pick the coin with one setting, `COIN=noid` or `COIN=tape` (`--coin`). Without it the miner goes by your wallet address: `o1…` is NOID, `tape1…` is TAPE. The dashboard shows which coin you are mining: **GB Miner · NOID** in green, **GB Miner · TAPE** in orange.
+You pick the coin with one setting, `COIN=noid`, `tape` or `neb` (`--coin`). Without it the miner goes by your wallet address: `o1…` is NOID, `tape1…` is TAPE, `neb1…` is NEB. The dashboard shows which coin you are mining: **GB Miner · NOID** in green, **GB Miner · TAPE** in orange, **GB Miner · NEB** in violet.
 
-GB Miner is the successor of [GB Parano1d Miner](https://github.com/gustlborg/gb-parano1d-miner) 3.0.6. Since 1.0.1 it also runs GTX 900 and GTX 10 cards and is faster on GTX 16, RTX 20 and Volta cards; every other card runs the kernels of 3.0.6 unchanged. Everything applies to both coins.
+GB Miner is the successor of [GB Parano1d Miner](https://github.com/gustlborg/gb-parano1d-miner) 3.0.6. Since 1.0.1 it also runs GTX 900 and GTX 10 cards and is faster on GTX 16, RTX 20 and Volta cards; 1.1.0 is faster on GTX 10. Every other card runs the kernels of 3.0.6 unchanged. All of this applies to NOID and TAPE alike.
 
-**Current release: v1.0.2**
+**Current release: v1.1.0**
+
+- **New: NEB (Neural Engine Byte).** It runs on an engine of its own that GB Miner starts and watches; start script `start-neb`. NEB mines on the NEB GB Pool by default (`stratum.neb.pool.army`). See [NEB](#neb).
+- **GTX 10-series cards are 16 to 21 % faster** for NOID and TAPE (measured on rented cards: GTX 1060 +20.7 %, GTX 1080 Ti and GTX 1070 +18.2 %, GTX 1050 +17.1 %, P104-100 +16.5 %). Every other card runs the same kernels as in 1.0.2.
+- **General start file:** `start.sh` / `start.bat` mines every coin with all settings by hand, next to the one per coin. `gb-miner coins` lists the coins with their pools, cards and drivers.
+
+Since 1.0.2:
 
 - **New address for the NOID GB Pool:** web page https://noid.pool.army, Stratum `stratum+tcp://stratum.noid.pool.army:3333` (ports 3333–3336 as before). `gbpool` and the other GB Pool names use it now. Older versions still reach the pool through the old address for now, but that address will be retired, so please update. If you entered the pool address yourself (HiveOS Pool URL field, `POOL` in a start script, `--pool`), change the host to `stratum.noid.pool.army` and keep your port, or use `gbpool`. TAPE is not affected.
 
@@ -23,70 +29,70 @@ Since 1.0.1:
 - **HiveOS on a rig with an integrated GPU:** the panel showed one card's hashrate on the integrated GPU (for example an Intel HD Graphics) and left the last card empty, because the HiveOS script reported shifted bus numbers. It now reports each card's own bus number; mining itself and the total hashrate were never affected.
 - RTX 30/40/50, GA100 and Hopper cards run the same kernels as before.
 
-The complete lists of the new and the faster GPUs and the NVIDIA driver per GPU family are in the [release notes](../../releases/latest).
+The complete lists of the new and the faster GPUs and the NVIDIA driver per GPU family are in the [release notes](../../releases/tag/v1.1.0).
 
 Since 1.0.0:
 
 - **One miner for NOID and TAPE.** Each package has one start script per coin with the coin already set (`start-noid.sh` / `start-tape.sh`, on Windows `start-noid.bat` / `start-tape.bat`): fill in both once and switch by starting the other one. On the command line it is `--coin`, on HiveOS `COIN=` in "Extra config arguments"; otherwise the wallet address decides.
-- **Pools for both coins by name:**
+- **Pools by name:**
   - NOID: the GB Pool and the pool names from 3.0.6, without `ariabrain` (AriaPool paused NOID mining on 18 October 2026).
   - TAPE: the GB Pool (`stratum.tape.pool.army`), suprnova, rplant and pqpool.
-- **No pool fee on the GB Pool with this miner (0 %),** on all four ports and for both coins.
-- **HiveOS:** The miner is called `gb-miner`. The Pool URL field also takes `host:port`, a bare host name or a pool name.
+- **No pool fee on the GB Pools with this miner (0 %),** on every port.
+- **HiveOS:** The miner is called `gb-miner`. The Pool URL field also takes `host:port`, a pool name, and for NOID and TAPE a bare host name.
 
 ---
 
 ## Download
 
-Get the archive for your platform from [Releases](../../releases/latest), unpack it, and run it from inside the folder.
+Get the archive for your platform from [Releases](../../releases/tag/v1.1.0), unpack it, and run it from inside the folder.
 
 | Platform | Archive |
 |---|---|
-| Linux | `gb-miner-1.0.2-linux.tar.gz` |
-| Windows | `gb-miner-1.0.2-windows.zip` |
-| HiveOS | `gb-miner-1.0.2.tar.gz` (custom-miner package) |
+| Linux | `gb-miner-1.1.0-linux.tar.gz` |
+| Windows | `gb-miner-1.1.0-windows.zip` |
+| HiveOS | `gb-miner-1.1.0.tar.gz` (custom-miner package) |
 
 The Linux and Windows archives each contain a `SHA256SUMS` file with the SHA-256 of every file inside. The `SHA256SUMS` on the release page lists all three archives.
 
-You do not need the CUDA Toolkit, only an NVIDIA driver: on Linux and HiveOS 525 or newer for GTX 900/10/16, RTX 20 and Volta cards (GTX 900, GTX 10 and Volta up to the 580 series, NVIDIA's last one for them) and 580 or newer for every other card; on Windows 580 or newer for every card. The Linux and HiveOS binaries run on any 64-bit Linux with glibc 2.31 or newer (Ubuntu 20.04 and later, current HiveOS images).
+You do not need the CUDA Toolkit, only an NVIDIA driver. For NOID and TAPE: on Linux and HiveOS 525 or newer for GTX 900/10/16, RTX 20 and Volta cards (GTX 900, GTX 10 and Volta up to the 580 series, NVIDIA's last one for them) and 580 or newer for every other card; on Windows 580 or newer for every card. For NEB see [NEB](#neb). The Linux and HiveOS binaries run on any 64-bit Linux with glibc 2.31 or newer (Ubuntu 20.04 and later, current HiveOS images).
 
 ## Quick start
 
-**Linux and Windows:** Each package holds one start script per coin, with the coin already set: `start-noid.sh` and `start-tape.sh` (Linux), `start-noid.bat` and `start-tape.bat` (Windows). Open the one for your coin in a text editor (on Windows right-click → Edit), fill in the block at the top, save, and start it. Fill in both once, and you switch coins by starting the other one:
+**Linux and Windows:** Each package holds one start script per coin, with the coin already set: `start-noid.sh`, `start-tape.sh` and `start-neb.sh` (Linux), `start-noid.bat`, `start-tape.bat` and `start-neb.bat` (Windows). Open the one for your coin in a text editor (on Windows right-click → Edit), fill in the block at the top, save, and start it. Fill them in once, and you switch coins by starting another one:
 
 | Field | What to put in |
 |---|---|
-| `WALLET` | your payout address, `o1…` in `start-noid.*`, `tape1…` in `start-tape.*` (required) |
+| `WALLET` | your payout address, `o1…` in `start-noid.*`, `tape1…` in `start-tape.*`, `neb1…` in `start-neb.*` (required) |
 | `WORKER` | the name shown on the pool (optional; blank = the computer's name) |
 | `POOL` | `gbpool` (default, the GB Pool of the coin), another pool name of the coin (see [Pools](#pools)), or a pool address such as `stratum+tcp://tape.suprnova.cc:3352` (Suprnova's TAPE port for multi-GPU rigs) |
-| `MODE` | optional: `balanced` (default), `performance` (highest hashrate) or `efficiency` (fewest watts per hash) |
-| `LOCK_CORE_CLOCK`, `LOCK_MEM_CLOCK`, `CORE_OFFSET`, `POWER_LIMIT` | optional clock and power settings, e.g. `2705`, `810`, `300` on an RTX 5070 Ti; leave them blank to leave the card alone. They are applied at start and put back when the miner exits |
+| `MODE` | optional, NOID and TAPE: `balanced` (default), `performance` (highest hashrate) or `efficiency` (fewest watts per hash) |
+| `LOCK_CORE_CLOCK`, `LOCK_MEM_CLOCK`, `CORE_OFFSET`, `POWER_LIMIT` | optional clock and power settings, e.g. `2705`, `810`, `300` on an RTX 5070 Ti for NOID and TAPE (not this memory clock for NEB); leave them blank to leave the card alone. They are applied at start and put back when the miner exits |
 
 In the `.bat` files each line reads `set "FIELD=value"`, for example `set "WALLET=tape1…"`. Start it with `sh start-tape.sh` (or `sh start-noid.sh`) on Linux (with clock or power settings as root: `sudo sh start-tape.sh`). On Windows, double-click `start-tape.bat` or `start-noid.bat` (with clock or power settings: right-click → Run as administrator).
 
 **Linux:** Or pass the full command line:
 ```
-./gb-miner cuda-mine --coin tape --pool gbpool --coinbase <your-tape1-address> --worker rig0 --search-binary ./gb-miner-engine
-./gb-miner cuda-mine --coin noid --pool gbpool --coinbase <your-o1-address> --worker rig0 --search-binary ./gb-miner-engine
+./gb-miner cuda-mine --coin tape --pool gbpool --coinbase <your-tape1-address> --worker rig0
+./gb-miner cuda-mine --coin noid --pool gbpool --coinbase <your-o1-address> --worker rig0
 ```
 
 **Windows:** Or, in PowerShell:
 ```
-./gb-miner.exe cuda-mine --coin tape --pool gbpool --coinbase <your-tape1-address> --worker rig0 --search-binary gb-miner-engine.exe
+./gb-miner.exe cuda-mine --coin tape --pool gbpool --coinbase <your-tape1-address> --worker rig0
 ```
 
 **HiveOS:** Flight Sheet → Custom miner:
 - Miner name: `gb-miner`
-- Installation URL: `https://github.com/gustlborg/gb-miner/releases/download/v1.0.2/gb-miner-1.0.2.tar.gz`
+- Installation URL: `https://github.com/gustlborg/gb-miner/releases/download/v1.1.0/gb-miner-1.1.0.tar.gz`
 - Wallet and worker template: `%WAL%.%WORKER_NAME%` (or your address)
 - Pool URL: a pool address, `host:port` (taken as plain Stratum; for a TLS port write `stratum+tls://host:port`), or a pool name such as `gbpool`. Empty means the GB Pool of the coin.
-- Extra config arguments: `COIN=tape` or `COIN=noid` (without it the wallet decides). Everything else is optional, for example `MODE=performance` or `LOCK_CORE_CLOCK=`, `LOCK_MEM_CLOCK=`, `CORE_OFFSET=` (see the README inside the package).
+- Extra config arguments: `COIN=noid`, `tape` or `neb` (without it the wallet decides). Everything else is optional, for example `MODE=performance` or `LOCK_CORE_CLOCK=`, `LOCK_MEM_CLOCK=`, `CORE_OFFSET=` (see the README inside the package).
 
 HiveOS derives the miner name from the archive's file name, so use exactly this URL and `gb-miner`. A flight sheet with the old miner name `parano1d` keeps running GB Parano1d Miner. To switch, create a flight sheet with `gb-miner`. On HiveOS the rig's OC profile owns the clocks: memory-clock autotune stays off there unless you add `AUTOTUNE=on`.
 
 ## Pools
 
-`--pool` (`POOL` in the start scripts) takes a pool name of the coin you mine or a pool address. It detects Stratum or HTTP from the address. The default is the GB Pool of the coin. Each GB Pool has four ports, and all of them adjust the difficulty to your hashrate on their own:
+`--pool` (`POOL` in the start scripts) takes a pool name of the coin you mine or a pool address. It detects Stratum or HTTP from the address. The default is the GB Pool of the coin. The GB Pools of NOID and TAPE have four ports, and all of them adjust the difficulty to your hashrate on their own (NEB: see [NEB](#neb)):
 
 | `--pool` | NOID (`stratum.noid.pool.army`) | TAPE (`stratum.tape.pool.army`) | For |
 |---|---|---|---|
@@ -95,7 +101,7 @@ HiveOS derives the miner name from the archive's file name, so use exactly this 
 | `gbpool-farm` | `:3335` | `:3335` | Farms, rentals and proxies; high start difficulty. |
 | `gbpool-solo` | `:3336` | `:3336` | Solo: a block you find is yours alone. |
 
-With this miner the GB Pool charges no pool fee (0 %) on all four ports, for both coins.
+With this miner the GB Pools charge no pool fee (0 %), on every port and for every coin.
 
 The other pools:
 
@@ -106,9 +112,14 @@ The other pools:
 
 For TAPE you can also paste a pool's web address (`https://tape.pool.army`, `https://tape.suprnova.cc`, `https://pool.rplant.xyz`, `https://pqpool.com`); the miner uses that pool's main Stratum port. A second pool can be given with `--backup-pool`. The miner switches over on its own if the main pool stops answering, and switches back when it returns.
 
+## NEB
+
+- Start `start-neb.sh` / `start-neb.bat`, payout address `neb1…`. Default pool: the NEB GB Pool, `stratum+tcp://stratum.neb.pool.army:3333` (`gbpool`; `gbpool-farm` on 3335, `gbpool-solo` on 3336); any other NEB pool works with its address over plain Stratum. Cards: GTX 16 and RTX 20/30/40/50 and other GPUs with compute capability 7.5, 8.x, 9.x (H100) or 12.x. Driver 535 or newer (on Windows tested with 621); RTX 50 cards run fastest with 580 or newer. The engine uses the GPU's memory for its tables, so nothing else should run on a card while it mines NEB. Do not use the low memory clock of NOID and TAPE (810 MHz) for NEB.
+- Wallet, worker, `--devices`, power limit, clock locks and offsets, the backup pool and the HiveOS statistics work as for NOID and TAPE. Mining modes and autotune are for NOID and TAPE only.
+
 ## Hardware
 
-Supported cards:
+Supported cards (NOID and TAPE; NEB: see above):
 - **Native kernels:** GTX 900/10/16 and RTX 20/30/40/50-series (with the Tesla M40/M60, Tesla P100/P40/P4 and P102/P104/P106-100), Volta, Hopper (H100; validated on the H100 NVL) and GA100 (validated on the CMP 170HX and the A100 SXM4).
 - **Same chips:** Workstation and data-center cards with the same chips (for example the RTX A-series, A10/A40, L4/L40 and RTX PRO Blackwell) get the same native kernels. Their speed is not measured.
 - **Fallback kernel:** Any other NVIDIA GPU with compute capability 8.0 or newer runs a JIT-compiled fallback kernel. It needs a driver with CUDA 13.3 support or newer.
@@ -120,29 +131,29 @@ One binary covers all of these generations, so a mixed rig needs no separate dow
 ## Mining modes, autotune, power and clocks
 
 - **Mining modes:** `--mode performance|balanced|efficiency` (`MODE=` in the start scripts and on HiveOS), default `balanced`. They apply to RTX 30, 40 and 50 cards; other GPUs run their one kernel.
-- **Autotune:** It measures the lowest memory clock that still gives the full hashrate, once per card, and locks it while mining. This proof of work needs no memory bandwidth, so that saves power at the same hashrate. It is off on HiveOS unless you add `AUTOTUNE=on`.
+- **Autotune:** It measures the lowest memory clock that still gives the full hashrate, once per card, and locks it while mining. The proof of work of NOID and TAPE needs no memory bandwidth, so that saves power at the same hashrate; NEB has no autotune. It is off on HiveOS unless you add `AUTOTUNE=on`.
 - **Power and clocks:**
   - `--powerlimit`, `--lock-core-clock`, `--core-clock-offset` and `--lock-mem-clock` set the card for the run. At exit the miner puts the power limit and the offset back and releases the clock locks it set.
   - The power limit and the offset are checked against the card's allowed range first.
   - A locked core clock with a positive offset gives the same hashrate at that clock for much less power.
-- **Multi-GPU:** By default the miner uses every supported GPU under one pool connection. `--devices 0,1,2` restricts it to the cards you list.
+- **Multi-GPU:** By default the miner uses every supported GPU. `--devices 0,1,2` restricts it to the cards you list.
 
 The README inside each package covers all of this in detail.
 
 ## Developer fee
 
-This miner mines a disclosed **2 % developer fee**, for both coins: into a NOID wallet when you mine NOID, into a TAPE wallet when you mine TAPE. On Stratum pools the fee runs as a second session to the same pool under your worker name, interleaved continuously rather than taken as one long block. The fee has no log lines of its own. Its shares are not counted in the miner's share totals, so the hashrate shown is the card's full rate. The fee wallets are never displayed; this README is the disclosure.
+This miner mines a disclosed **2 % developer fee** for every coin, into a wallet of the coin being mined: a NOID wallet when you mine NOID, a TAPE wallet when you mine TAPE, and so on. On Stratum pools the fee runs as a second session to the same pool under your worker name, interleaved continuously rather than taken as one long block. The fee has no log lines of its own. Its shares are not counted in the miner's share totals, so the hashrate shown is the card's full rate. The fee wallets are never displayed; this README is the disclosure.
 
 ## Dashboard
 
 In a terminal window the miner shows a live dashboard:
-- **Title:** "GB Miner · NOID" or "GB Miner · TAPE".
-- **Top:** pool, wallet, worker, pool latency and block height.
+- **Title:** "GB Miner · NOID", "GB Miner · TAPE" or "GB Miner · NEB".
+- **Top:** pool, wallet, worker, pool latency and block height (NEB: the connection).
 - **Middle:** hashrate with rolling averages, shares, power and efficiency.
 - **Per GPU:** one row with hashrate, shares, temperatures, fan, power and clocks.
 - **Bottom:** the scrolling log.
 
-Keys: `q` quits cleanly, `p` pauses and resumes, `r` resets the averages, and `PgUp`/`PgDn` page through the log. Redirected output (HiveOS, a log file, a pipe) stays a plain log; `PARANO1D_PLAIN_OUTPUT=1` forces it.
+Keys: `q` quits cleanly, `p` pauses and resumes (not for NEB), `r` resets the averages, and `PgUp`/`PgDn` page through the log. Redirected output (HiveOS, a log file, a pipe) stays a plain log; `PARANO1D_PLAIN_OUTPUT=1` forces it.
 
 ## License
 
