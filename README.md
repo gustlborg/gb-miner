@@ -2,7 +2,7 @@
 
 <p>
   <img src="images/dashboard-noid.png" alt="GB Miner dashboard mining NOID" width="49%">
-  <img src="images/dashboard-tape.png" alt="GB Miner dashboard mining TAPE" width="49%">
+  <img src="images/dashboard-neb.png" alt="GB Miner dashboard mining NEB" width="49%">
 </p>
 
 **GB Miner** is a GPU miner for three coins: **Parano1d (NOID)** and **Retro Boomer (TAPE)**, which share the same proof of work (Poseidon2b), and **Neural Engine Byte (NEB)**, mined by an engine of its own (see [NEB](#neb)). For NOID and TAPE it runs on NVIDIA GTX 900/10/16 and RTX 20/30/40/50-series cards, Tesla M40, P100 and P40, Volta (V100, Titan V, Quadro GV100), Hopper (H100) and GA100 (CMP 170HX, A100, A30), on Linux, Windows and HiveOS, with one download per platform. It speaks Stratum and HTTP pools natively.
@@ -29,7 +29,7 @@ Since 1.0.1:
 - **HiveOS on a rig with an integrated GPU:** the panel showed one card's hashrate on the integrated GPU (for example an Intel HD Graphics) and left the last card empty, because the HiveOS script reported shifted bus numbers. It now reports each card's own bus number; mining itself and the total hashrate were never affected.
 - RTX 30/40/50, GA100 and Hopper cards run the same kernels as before.
 
-The complete lists of the new and the faster GPUs and the NVIDIA driver per GPU family are in the [release notes](../../releases/tag/v1.1.1).
+The complete lists of the new and the faster GPUs and the NVIDIA driver per GPU family are in the [release notes](../../releases/latest).
 
 Since 1.0.0:
 
@@ -44,7 +44,7 @@ Since 1.0.0:
 
 ## Download
 
-Get the archive for your platform from [Releases](../../releases/tag/v1.1.1), unpack it, and run it from inside the folder.
+Get the archive for your platform from [Releases](../../releases/latest), unpack it, and run it from inside the folder.
 
 | Platform | Archive |
 |---|---|
