@@ -11,7 +11,7 @@ You pick the coin with one setting, `COIN=noid`, `tape` or `neb` (`--coin`). Wit
 
 GB Miner is the successor of [GB Parano1d Miner](https://github.com/gustlborg/gb-parano1d-miner) 3.0.6. Since 1.0.1 it also runs GTX 900 and GTX 10 cards and is faster on GTX 16, RTX 20 and Volta cards; 1.1.0 is faster on GTX 10. Every other card runs the kernels of 3.0.6 unchanged. All of this applies to NOID and TAPE alike.
 
-**Current release: v1.1.0**
+**Current release: v1.1.1**
 
 - **New: NEB (Neural Engine Byte).** It runs on an engine of its own that GB Miner starts and watches; start script `start-neb`. NEB mines on the NEB GB Pool by default (`stratum.neb.pool.army`). See [NEB](#neb).
 - **GTX 10-series cards are 16 to 21 % faster** for NOID and TAPE (measured on rented cards: GTX 1060 +20.7 %, GTX 1080 Ti and GTX 1070 +18.2 %, GTX 1050 +17.1 %, P104-100 +16.5 %). Every other card runs the same kernels as in 1.0.2.
@@ -29,7 +29,7 @@ Since 1.0.1:
 - **HiveOS on a rig with an integrated GPU:** the panel showed one card's hashrate on the integrated GPU (for example an Intel HD Graphics) and left the last card empty, because the HiveOS script reported shifted bus numbers. It now reports each card's own bus number; mining itself and the total hashrate were never affected.
 - RTX 30/40/50, GA100 and Hopper cards run the same kernels as before.
 
-The complete lists of the new and the faster GPUs and the NVIDIA driver per GPU family are in the [release notes](../../releases/tag/v1.1.0).
+The complete lists of the new and the faster GPUs and the NVIDIA driver per GPU family are in the [release notes](../../releases/tag/v1.1.1).
 
 Since 1.0.0:
 
@@ -44,13 +44,13 @@ Since 1.0.0:
 
 ## Download
 
-Get the archive for your platform from [Releases](../../releases/tag/v1.1.0), unpack it, and run it from inside the folder.
+Get the archive for your platform from [Releases](../../releases/tag/v1.1.1), unpack it, and run it from inside the folder.
 
 | Platform | Archive |
 |---|---|
-| Linux | `gb-miner-1.1.0-linux.tar.gz` |
-| Windows | `gb-miner-1.1.0-windows.zip` |
-| HiveOS | `gb-miner-1.1.0.tar.gz` (custom-miner package) |
+| Linux | `gb-miner-1.1.1-linux.tar.gz` |
+| Windows | `gb-miner-1.1.1-windows.zip` |
+| HiveOS | `gb-miner-1.1.1.tar.gz` (custom-miner package) |
 
 The Linux and Windows archives each contain a `SHA256SUMS` file with the SHA-256 of every file inside. The `SHA256SUMS` on the release page lists all three archives.
 
@@ -83,7 +83,7 @@ In the `.bat` files each line reads `set "FIELD=value"`, for example `set "WALLE
 
 **HiveOS:** Flight Sheet → Custom miner:
 - Miner name: `gb-miner`
-- Installation URL: `https://github.com/gustlborg/gb-miner/releases/download/v1.1.0/gb-miner-1.1.0.tar.gz`
+- Installation URL: `https://github.com/gustlborg/gb-miner/releases/download/v1.1.1/gb-miner-1.1.1.tar.gz`
 - Wallet and worker template: `%WAL%.%WORKER_NAME%` (or your address)
 - Pool URL: a pool address, `host:port` (taken as plain Stratum; for a TLS port write `stratum+tls://host:port`), or a pool name such as `gbpool`. Empty means the GB Pool of the coin.
 - Extra config arguments: `COIN=noid`, `tape` or `neb` (without it the wallet decides). Everything else is optional, for example `MODE=performance` or `LOCK_CORE_CLOCK=`, `LOCK_MEM_CLOCK=`, `CORE_OFFSET=` (see the README inside the package).
