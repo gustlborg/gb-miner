@@ -114,8 +114,40 @@ For TAPE you can also paste a pool's web address (`https://tape.pool.army`, `htt
 
 ## NEB
 
-- Start `start-neb.sh` / `start-neb.bat`, payout address `neb1…`. Default pool: the NEB GB Pool, `stratum+tcp://stratum.neb.pool.army:3333` (`gbpool`; `gbpool-farm` on 3335, `gbpool-solo` on 3336); any other NEB pool works with its address over plain Stratum. Cards: GTX 16 and RTX 20/30/40/50 and other GPUs with compute capability 7.5, 8.x, 9.x (H100) or 12.x. Driver 535 or newer (on Windows tested with 621); RTX 50 cards run fastest with 580 or newer. The engine uses the GPU's memory for its tables, so nothing else should run on a card while it mines NEB. Do not use the low memory clock of NOID and TAPE (810 MHz) for NEB.
+- Start `start-neb.sh` / `start-neb.bat`, payout address `neb1…`. Default pool: the NEB GB Pool, `stratum+tcp://stratum.neb.pool.army:3333` (`gbpool`; `gbpool-farm` on 3335, `gbpool-solo` on 3336); any other NEB pool works with its address over plain Stratum. Cards: GTX 16 and RTX 20/30/40/50 and other GPUs with compute capability 7.5, 8.x, 9.x (H100) or 12.x. Driver 535 or newer (on Windows tested with 621); RTX 50 cards run fastest with 580 or newer. The engine uses the GPU's memory for its tables, so nothing else should run on a card while it mines NEB. Leave the memory clock alone for NEB unless you have measured your card: the low memory clock of NOID and TAPE (810 MHz) halves the TESS rate on the RTX 4060 Ti and RTX 5070 Ti we measured (the RTX 3060 lost nothing, see "NEB OC profiles").
 - Wallet, worker, `--devices`, power limit, clock locks and offsets, the backup pool and the HiveOS statistics work as for NOID and TAPE. Mining modes and autotune are for NOID and TAPE only.
+
+## NEB OC profiles
+
+Less power at about the same or a higher hashrate (Fast, Eco), or much less power for a lower one (Cool). Measured on our own cards with the NEB engine of GB Miner v1.1.2 (NEB Kepler model of block 9266 and TESS model of block 9317, Linux, about 3 minutes per setting, hashrate and power weighted 82 % Kepler / 18 % TESS as on the chain, against the same card at stock; no invalid share in any setting):
+
+```
+┌─────────┬─────────┬──────┬────────┬─────┬──────────┬───────┐
+│ RTX     │ Profile │ Lock │ Offset │ Mem │ Hashrate │ Power │
+├─────────┼─────────┼──────┼────────┼─────┼──────────┼───────┤
+│ 5070 Ti │ Stock   │      │        │     │          │ 300 W │
+│         │ Fast    │ 2800 │   +300 │     │     +4 % │ 250 W │
+│         │ Eco     │ 2600 │   +300 │     │     -4 % │ 201 W │
+│         │ Cool    │ 2300 │   +300 │     │    -15 % │ 163 W │
+├─────────┼─────────┼──────┼────────┼─────┼──────────┼───────┤
+│ 4060 Ti │ Stock   │      │        │     │          │ 165 W │
+│         │ Fast    │ 2600 │   +250 │     │   +4.5 % │ 157 W │
+│         │ Eco     │ 2450 │   +250 │     │     -1 % │ 127 W │
+│         │ Cool    │ 2200 │   +250 │     │    -11 % │ 104 W │
+├─────────┼─────────┼──────┼────────┼─────┼──────────┼───────┤
+│ 3060    │ Stock   │      │        │     │          │ 170 W │
+│         │ Fast    │ 1900 │   +200 │ 810 │   +7.6 % │ 141 W │
+│         │ Eco     │ 1750 │   +200 │ 810 │     -1 % │ 107 W │
+│         │ Cool    │ 1550 │   +200 │ 810 │    -15 % │  77 W │
+└─────────┴─────────┴──────┴────────┴─────┴──────────┴───────┘
+```
+
+Depending on which GPU you have, your values will probably differ.
+
+- **Where:** `LOCK_CORE_CLOCK` (Lock), `CORE_OFFSET` (Offset) and `LOCK_MEM_CLOCK` (Mem) in `start-neb.sh` / `start-neb.bat`. They need root on Linux (`sudo sh start-neb.sh`) and Administrator rights on Windows (right-click → Run as administrator). With more than one GPU, also set `DEVICES`, otherwise the miner leaves the clocks alone. At exit the miner puts the card back. On HiveOS, use the OC settings of the rig.
+- **Lock and offset together:** the lock fixes the clock, the offset lets the card reach it at a lower voltage. An offset without a lock saves no power: the card just boosts higher, which can make it unstable.
+- **Start low:** begin with a smaller offset and raise it step by step. Too high an offset shows as a card that drops out, an engine restart in the log, or a pool hashrate clearly below the miner's; NEB does not report it as rejected shares. Then go back a step.
+- **Mixed rigs:** the two locks take one value for all cards, so start one miner per card model, each with its own `DEVICES` and `WORKER`.
 
 ## Hardware
 
